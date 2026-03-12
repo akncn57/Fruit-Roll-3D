@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Core;
 using Cameras;
+using Dice;
 using Map;
 using CameraType = Cameras.CameraType;
 
@@ -83,14 +84,44 @@ namespace Core
         private IEnumerator RollingDiceRoutine()
         {
             CameraManager.Instance.SwitchCamera(CameraType.DiceRoll);
+
+            bool isDiceRolling = true;
+            int rolledSum = 0;
+
+            // Define Action to listen for when dice stop
+            System.Action<int> onDiceStoppedAction = (total) => 
+            {
+                rolledSum = total;
+                isDiceRolling = false;
+            };
+
+            // Subscribe to the event
+            DiceManager.Instance.OnAllDiceStopped += onDiceStoppedAction;
+
+            // Wait for the camera transition to finish before rolling the dice
+            yield return new WaitForSeconds(1.5f); // Adjust this based on Cinemachine blend time
+
+            // Physically throw all dice
+            DiceManager.Instance.RollDice();
+
+            // Wait frame by frame until the physical dice stop rolling and event fires
+            while (isDiceRolling)
+            {
+                yield return null;
+            }
+
+            // Unsubscribe from the event
+            DiceManager.Instance.OnAllDiceStopped -= onDiceStoppedAction;
+
+            _currentStepIndex += rolledSum;
             
-            var diceAnimationLength = Random.Range(2f, 3.5f);
-            yield return new WaitForSeconds(diceAnimationLength);
+            Debug.Log($"[GameManager] Dice Physics Completed! Rolled: {rolledSum}. New Target Step: {_currentStepIndex}");
+
+            // Wait a second to let the player see the stopped dice result
+            yield return new WaitForSeconds(1f);
             
-            var rolledDice = Random.Range(1, 6);
-            _currentStepIndex += rolledDice;
-            
-            Debug.Log($"[GameManager] Dice Rolled! Rolled: {rolledDice}. New Target Step: {_currentStepIndex}");
+            // Clean up the physics dice
+            DiceManager.Instance.ClearDice();
             
             ChangeState(GameState.MovingMap);
         }
