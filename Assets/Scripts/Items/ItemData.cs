@@ -5,7 +5,7 @@ namespace Items
     [Serializable]
     public class ItemData
     {
-        public ItemType Type { get; set; }
-        public int Amount { get; set; }
+        public ItemType Type;
+        public int Amount;
     }
 }

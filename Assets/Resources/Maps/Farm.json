@@ -1,0 +1,146 @@
+{
+    "MapName": "Farm",
+    "TotalSteps": 20,
+    "Steps": [
+        {
+            "StepIndex": 0,
+            "Reward": {
+                "Type": 1,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 1,
+            "Reward": {
+                "Type": 2,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 2,
+            "Reward": {
+                "Type": 3,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 3,
+            "Reward": {
+                "Type": 1,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 4,
+            "Reward": {
+                "Type": 2,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 5,
+            "Reward": {
+                "Type": 3,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 6,
+            "Reward": {
+                "Type": 1,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 7,
+            "Reward": {
+                "Type": 2,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 8,
+            "Reward": {
+                "Type": 3,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 9,
+            "Reward": {
+                "Type": 1,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 10,
+            "Reward": {
+                "Type": 2,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 11,
+            "Reward": {
+                "Type": 3,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 12,
+            "Reward": {
+                "Type": 1,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 13,
+            "Reward": {
+                "Type": 2,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 14,
+            "Reward": {
+                "Type": 3,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 15,
+            "Reward": {
+                "Type": 1,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 16,
+            "Reward": {
+                "Type": 2,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 17,
+            "Reward": {
+                "Type": 3,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 18,
+            "Reward": {
+                "Type": 1,
+                "Amount": 1
+            }
+        },
+        {
+            "StepIndex": 19,
+            "Reward": {
+                "Type": 2,
+                "Amount": 1
+            }
+        }
+    ]
+}

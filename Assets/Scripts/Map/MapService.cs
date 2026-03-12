@@ -1,0 +1,46 @@
+using UnityEngine;
+using System.IO;
+
+namespace Map
+{
+    public static class MapService
+    {
+        private static string GetDirectoryPath()
+        {
+            return Path.Combine(Application.dataPath, "Resources", "Maps");
+        }
+
+        public static void SaveMap(MapData mapData)
+        {
+            string dir = GetDirectoryPath();
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+
+            string filePath = Path.Combine(dir, $"{mapData.MapName}.json");
+            string json = JsonUtility.ToJson(mapData, true);
+            File.WriteAllText(filePath, json);
+            Debug.Log($"Map '{mapData.MapName}' saved to: {filePath}");
+            
+#if UNITY_EDITOR
+            UnityEditor.AssetDatabase.Refresh();
+#endif
+        }
+
+        public static MapData LoadMap(string mapName)
+        {
+            // At runtime, we load from Resources folder. Unity expects paths relative to Resources and without extensions.
+            TextAsset jsonAsset = Resources.Load<TextAsset>($"Maps/{mapName}");
+            if (jsonAsset != null)
+            {
+                return JsonUtility.FromJson<MapData>(jsonAsset.text);
+            }
+            else
+            {
+                Debug.LogError($"Map '{mapName}' not found in Resources/Maps.");
+                return null;
+            }
+        }
+    }
+}
