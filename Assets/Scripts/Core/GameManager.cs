@@ -68,8 +68,10 @@ namespace Core
 
         private IEnumerator TopViewRoutine()
         {
+            // Switch to top-down map view
             CameraManager.Instance.SwitchCamera(CameraType.Top);
             
+            // Wait for duration then prepare for the physical dice roll
             yield return new WaitForSeconds(topViewDuration);
             
             ChangeState(GameState.WaitingForRoll);
@@ -77,6 +79,7 @@ namespace Core
         
         public void OnRollButtonTapped()
         {
+            // Only allow rolling if we are waiting for player input
             if (CurrentState == GameState.WaitingForRoll)
             {
                 ChangeState(GameState.RollingDice);
@@ -85,40 +88,39 @@ namespace Core
 
         private IEnumerator RollingDiceRoutine()
         {
+            // Transition to dice view camera
             CameraManager.Instance.SwitchCamera(CameraType.DiceRoll);
 
-            bool isDiceRolling = true;
-            int rolledSum = 0;
+            var isDiceRolling = true;
+            var rolledSum = 0;
 
-            // Define Action to listen for when dice stop
-            System.Action<int> onDiceStoppedAction = (total) => 
+            // Callback triggered when all physical dice stop moving
+            var onDiceStoppedAction = (System.Action<int>)((total) => 
             {
                 rolledSum = total;
                 isDiceRolling = false;
-            };
+            });
 
-            // Subscribe to the event
             DiceManager.Instance.OnAllDiceStopped += onDiceStoppedAction;
 
-            // Wait for the camera transition to finish before rolling the dice
+            // Wait for the Cinemachine blend transition to finish before rolling
             yield return new WaitForSeconds(cameraSwitchDelayForDice);
 
             DiceManager.Instance.RollDice();
 
-            // Wait frame by frame until the physical dice stop rolling and event fires
+            // Hold execution until our action sets isDiceRolling to false
             while (isDiceRolling)
             {
                 yield return null;
             }
 
-            // Unsubscribe from the event
             DiceManager.Instance.OnAllDiceStopped -= onDiceStoppedAction;
 
             _currentStepIndex += rolledSum;
             
             Debug.Log($"[GameManager] Dice Physics Completed! Rolled: {rolledSum}. New Target Step: {_currentStepIndex}");
 
-            // Wait to let the player see the stopped dice result
+            // Let the player review the rolled output before snapping the camera back
             yield return new WaitForSeconds(waitAfterDiceStop);
             
             DiceManager.Instance.ClearDice();
@@ -128,28 +130,34 @@ namespace Core
 
         private IEnumerator MovingMapRoutine()
         {
+            // Focus on the character
             CameraManager.Instance.SwitchCamera(CameraType.Step);
+            
+            // Wait shortly before moving
             yield return new WaitForSeconds(cameraSwitchDelayForStep);
             
-            bool isMapMoving = true;
+            var isMapMoving = true;
             
-            System.Action onMapMovedAction = () =>
+            // Callback triggered when map reaches the target step
+            var onMapMovedAction = (System.Action)(() =>
             {
                 isMapMoving = false;
-            };
+            });
 
             MapManager.Instance.OnMapMovementCompleted += onMapMovedAction;
             
+            // Start map scrolling transition
             MapManager.Instance.MoveMapToStep(_currentStepIndex, 20f);
             
-            // Wait until MapManager fires the completion event
+            // Wait until movement finishes
             while (isMapMoving)
             {
                 yield return null;
             }
             
             MapManager.Instance.OnMapMovementCompleted -= onMapMovedAction;
-
+            
+            // Movement complete, back to top view observation
             ChangeState(GameState.TopView);
         }
     }
