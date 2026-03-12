@@ -31,7 +31,9 @@ namespace Map.Editor
             _currentMapData.MapName = EditorGUILayout.TextField("Map Name", _currentMapData.MapName);
             
             EditorGUI.BeginChangeCheck();
-            int newTotalSteps = EditorGUILayout.IntField("Total Steps", _currentMapData.TotalSteps);
+            
+            var newTotalSteps = EditorGUILayout.IntField("Total Steps", _currentMapData.TotalSteps);
+            
             if (EditorGUI.EndChangeCheck())
             {
                 UpdateStepsList(newTotalSteps);
@@ -44,7 +46,7 @@ namespace Map.Editor
             
             if (_currentMapData.Steps != null)
             {
-                for (int i = 0; i < _currentMapData.Steps.Count; i++)
+                for (var i = 0; i < _currentMapData.Steps.Count; i++)
                 {
                     GUILayout.BeginVertical("box");
                     GUILayout.Label($"Step {i + 1}", EditorStyles.boldLabel);
@@ -88,7 +90,8 @@ namespace Map.Editor
                     return;
                 }
                 
-                MapData loadedMap = MapService.LoadMap(_currentMapData.MapName);
+                var loadedMap = MapService.LoadMap(_currentMapData.MapName);
+                
                 if (loadedMap != null)
                 {
                     _currentMapData = loadedMap;
@@ -114,16 +117,18 @@ namespace Map.Editor
 
             if (newCount > _currentMapData.Steps.Count)
             {
-                int itemsToAdd = newCount - _currentMapData.Steps.Count;
-                for (int i = 0; i < itemsToAdd; i++)
+                var itemsToAdd = newCount - _currentMapData.Steps.Count;
+                
+                for (var i = 0; i < itemsToAdd; i++)
                 {
                     _currentMapData.Steps.Add(new MapStepData() { Reward = new ItemData { Type = ItemType.None, Amount = 1 } });
                 }
             }
             else if (newCount < _currentMapData.Steps.Count)
             {
-                int itemsToRemove = _currentMapData.Steps.Count - newCount;
-                for (int i = 0; i < itemsToRemove; i++)
+                var itemsToRemove = _currentMapData.Steps.Count - newCount;
+                
+                for (var i = 0; i < itemsToRemove; i++)
                 {
                     _currentMapData.Steps.RemoveAt(_currentMapData.Steps.Count - 1);
                 }
