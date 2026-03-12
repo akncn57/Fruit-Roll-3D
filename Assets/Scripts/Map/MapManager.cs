@@ -1,9 +1,12 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Map
 {
     public class MapManager : MonoBehaviour
     {
+        public static MapManager Instance { get; private set; }
+        
         [Header("Map Settings")]
         [SerializeField] private string mapNameToLoad = "Level1"; 
         [SerializeField] private float stepDistanceZ = -4.986f;
@@ -15,6 +18,19 @@ namespace Map
         [Header("Container")]
         [SerializeField] private Transform mapContainer;
 
+        private void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+        
         private void Start()
         {
             GenerateMap();
@@ -52,6 +68,35 @@ namespace Map
             }
             
             Debug.Log($"Map '{mapData.MapName}' generated successfully with {mapData.TotalSteps} reward steps ({tileCount} total tiles).");
+        }
+        
+        public void MoveMapToStep(int targetStepIndex, float unitsPerSecond = 20f)
+        {
+            var targetZPosition = -(targetStepIndex * 2) * stepDistanceZ;
+            var startPosition = mapContainer.position;
+            var targetPosition = new Vector3(startPosition.x, startPosition.y, targetZPosition);
+            var distance = Vector3.Distance(startPosition, targetPosition);
+            var moveDuration = distance / unitsPerSecond;
+            
+            StartCoroutine(MoveContainerCoroutine(startPosition, targetPosition, moveDuration));
+        }
+
+        private IEnumerator MoveContainerCoroutine(Vector3 start, Vector3 target, float duration)
+        {
+            var elapsed = 0f;
+            
+            while (elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                
+                var t = Mathf.Clamp01(elapsed / duration);
+                
+                t = Mathf.SmoothStep(0f, 1f, t);
+                mapContainer.position = Vector3.Lerp(start, target, t);
+                yield return null;
+            }
+            
+            mapContainer.position = target;
         }
     }
 }
