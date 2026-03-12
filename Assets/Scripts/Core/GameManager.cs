@@ -14,9 +14,11 @@ namespace Core
 
         public GameState CurrentState { get; private set; }
 
-        [Header("Flow Settings")]
-        [SerializeField] private float initialTopViewDuration = 3f;
-        [SerializeField] private float topViewAfterMoveDuration = 2f;
+        [Header("Delay Settings")]
+        [SerializeField] private float topViewDuration = 2f;
+        [SerializeField] private float cameraSwitchDelayForDice = 1.5f;
+        [SerializeField] private float waitAfterDiceStop = 1f;
+        [SerializeField] private float cameraSwitchDelayForStep = 0.5f;
         
         private int _currentStepIndex = 0;
 
@@ -68,7 +70,7 @@ namespace Core
         {
             CameraManager.Instance.SwitchCamera(CameraType.Top);
             
-            yield return new WaitForSeconds(topViewAfterMoveDuration);
+            yield return new WaitForSeconds(topViewDuration);
             
             ChangeState(GameState.WaitingForRoll);
         }
@@ -99,9 +101,8 @@ namespace Core
             DiceManager.Instance.OnAllDiceStopped += onDiceStoppedAction;
 
             // Wait for the camera transition to finish before rolling the dice
-            yield return new WaitForSeconds(1.5f); // Adjust this based on Cinemachine blend time
+            yield return new WaitForSeconds(cameraSwitchDelayForDice);
 
-            // Physically throw all dice
             DiceManager.Instance.RollDice();
 
             // Wait frame by frame until the physical dice stop rolling and event fires
@@ -117,10 +118,9 @@ namespace Core
             
             Debug.Log($"[GameManager] Dice Physics Completed! Rolled: {rolledSum}. New Target Step: {_currentStepIndex}");
 
-            // Wait a second to let the player see the stopped dice result
-            yield return new WaitForSeconds(1f);
+            // Wait to let the player see the stopped dice result
+            yield return new WaitForSeconds(waitAfterDiceStop);
             
-            // Clean up the physics dice
             DiceManager.Instance.ClearDice();
             
             ChangeState(GameState.MovingMap);
@@ -129,9 +129,27 @@ namespace Core
         private IEnumerator MovingMapRoutine()
         {
             CameraManager.Instance.SwitchCamera(CameraType.Step);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(cameraSwitchDelayForStep);
+            
+            bool isMapMoving = true;
+            
+            System.Action onMapMovedAction = () =>
+            {
+                isMapMoving = false;
+            };
+
+            MapManager.Instance.OnMapMovementCompleted += onMapMovedAction;
+            
             MapManager.Instance.MoveMapToStep(_currentStepIndex, 20f);
-            yield return new WaitForSeconds(3f); 
+            
+            // Wait until MapManager fires the completion event
+            while (isMapMoving)
+            {
+                yield return null;
+            }
+            
+            MapManager.Instance.OnMapMovementCompleted -= onMapMovedAction;
+
             ChangeState(GameState.TopView);
         }
     }

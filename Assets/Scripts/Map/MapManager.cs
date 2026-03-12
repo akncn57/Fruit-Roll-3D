@@ -1,5 +1,6 @@
-using System.Collections;
 using UnityEngine;
+using System;
+using System.Collections;
 
 namespace Map
 {
@@ -69,6 +70,8 @@ namespace Map
             
             Debug.Log($"Map '{mapData.MapName}' generated successfully with {mapData.TotalSteps} reward steps ({tileCount} total tiles).");
         }
+        // Event triggered when the map finishes moving to the target step
+        public event Action OnMapMovementCompleted;
         
         public void MoveMapToStep(int targetStepIndex, float unitsPerSecond = 20f)
         {
@@ -97,6 +100,8 @@ namespace Map
             }
             
             mapContainer.position = target;
+            
+            OnMapMovementCompleted?.Invoke();
         }
     }
 }
