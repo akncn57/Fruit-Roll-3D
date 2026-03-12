@@ -60,6 +60,13 @@ namespace Map
                 var tile1Instance = Instantiate(normalTilePrefab, tile1Position, Quaternion.identity, mapContainer);
                 tile1Instance.name = $"Tile1_Step_{stepData.StepIndex}";
                 
+                // Fetch the MapTile controller and initialize the Visuals (Text, Objects inside box)
+                var mapTileScript = tile1Instance.GetComponent<MapTile>();
+                if (mapTileScript != null)
+                {
+                    mapTileScript.Initialize(stepData);
+                }
+                
                 tileCount++;
 
                 var tile2Position = new Vector3(0, 0, tileCount * stepDistanceZ);
