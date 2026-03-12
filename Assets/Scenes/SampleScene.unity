@@ -258,6 +258,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8692079348738570116, guid: 4f9803ed31b25c049b47eaf15bcb0c32, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -307,8 +311,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89b3688da644acb49b6e9d460048f4c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core.GameManager
-  initialTopViewDuration: 3
-  topViewAfterMoveDuration: 2
+  topViewDuration: 2
+  cameraSwitchDelayForDice: 1.5
+  waitAfterDiceStop: 1
+  cameraSwitchDelayForStep: 0.5
 --- !u!1 &274589361
 GameObject:
   m_ObjectHideFlags: 0
@@ -967,6 +973,7 @@ MonoBehaviour:
   throwForceMin: 5
   throwForceMax: 10
   torqueStrength: 20
+  fallThresholdY: -5
 --- !u!1 &1504404409
 GameObject:
   m_ObjectHideFlags: 0
