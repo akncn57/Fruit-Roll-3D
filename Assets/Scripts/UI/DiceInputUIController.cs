@@ -1,13 +1,17 @@
-using UnityEngine;
+using Core;
+using Dice;
 using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
-namespace Dice
+namespace UI
 {
-    public class DiceInputController : MonoBehaviour
+    public class DiceInputUIController : MonoBehaviour
     {
-        [Header("UI References")]
+        [Header("References")]
         [SerializeField] private TMP_InputField firstDiceInput;
         [SerializeField] private TMP_InputField secondDiceInput;
+        [SerializeField] private Button rollDiceButton;
 
         private void Start()
         {
@@ -16,6 +20,9 @@ namespace Dice
                 
             if (secondDiceInput != null)
                 secondDiceInput.onValueChanged.AddListener(UpdateForcedValues);
+            
+            if (rollDiceButton != null)
+                rollDiceButton.onClick.AddListener(RollDice);
         }
 
         private void UpdateForcedValues(string _)
@@ -33,6 +40,13 @@ namespace Dice
             {
                 DiceManager.Instance.ForcedDiceValues.Add(val2);
             }
+        }
+
+        private void RollDice()
+        {
+            if (GameManager.Instance == null) return;
+            
+            GameManager.Instance.OnRollButtonTapped();
         }
     }
 }

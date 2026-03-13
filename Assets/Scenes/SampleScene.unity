@@ -434,6 +434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Dice.DiceInputController
   firstDiceInput: {fileID: 1668922118}
   secondDiceInput: {fileID: 960719454}
+  rollDiceButton: {fileID: 2010551967}
 --- !u!1 &322166200
 GameObject:
   m_ObjectHideFlags: 0
@@ -2570,19 +2571,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2010551968}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 139468218}
-        m_TargetAssemblyTypeName: Core.GameManager, Assembly-CSharp
-        m_MethodName: OnRollButtonTapped
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2010551968
 MonoBehaviour:
   m_ObjectHideFlags: 0
