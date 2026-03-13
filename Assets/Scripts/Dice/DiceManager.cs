@@ -27,6 +27,8 @@ namespace Dice
         
         public event Action<int> OnAllDiceStopped;
 
+        public List<int> ForcedDiceValues { get; set; } = new List<int>();
+
         private void Awake()
         {
             if (Instance == null)
@@ -62,7 +64,13 @@ namespace Dice
                     Random.Range(-torqueStrength, torqueStrength)
                 );
 
-                diceScript.Roll(force, torque);
+                int? forceVal = null;
+                if (i < ForcedDiceValues.Count && ForcedDiceValues[i] > 0)
+                {
+                    forceVal = ForcedDiceValues[i];
+                }
+
+                diceScript.Roll(force, torque, forceVal);
             }
 
             StartCoroutine(WatchAllDiceRoutine());
@@ -125,7 +133,7 @@ namespace Dice
             rb.angularVelocity = Vector3.zero;
 
             dice.transform.position = new Vector3(diceSpawnPoint.position.x, diceSpawnPoint.position.y + 2f, diceSpawnPoint.position.z);
-            dice.Roll(Vector3.down * 2f, Random.insideUnitSphere * torqueStrength);
+            dice.Roll(Vector3.down * 2f, Random.insideUnitSphere * torqueStrength, dice.ForcedValue);
         }
     }
 }

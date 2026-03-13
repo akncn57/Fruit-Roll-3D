@@ -15,14 +15,17 @@ namespace Dice
 
         public bool IsRolling => _isRolling;
         public int CurrentValue => _currentValue;
+        public int? ForcedValue => _forcedValue;
         
         private bool _isRolling = false;
         private int _currentValue = 0;
+        private int? _forcedValue = null;
 
-        public void Roll(Vector3 throwForce, Vector3 throwTorque)
+        public void Roll(Vector3 throwForce, Vector3 throwTorque, int? forcedValue = null)
         {
             _isRolling = true;
             _currentValue = 0;
+            _forcedValue = forcedValue;
             
             rb.isKinematic = false;
             rb.AddForce(throwForce, ForceMode.Impulse);
@@ -40,9 +43,27 @@ namespace Dice
                 yield return new WaitForEndOfFrame();
             }
 
+            if (_forcedValue.HasValue)
+            {
+                ForceFaceValue(_forcedValue.Value);
+            }
+
             CalculateValue();
             
             _isRolling = false;
+        }
+
+        private void ForceFaceValue(int targetValue)
+        {
+            foreach (var face in diceFaces)
+            {
+                if (face.faceValue == targetValue)
+                {
+                    Quaternion deltaRot = Quaternion.FromToRotation(face.transform.up, Vector3.up);
+                    transform.rotation = deltaRot * transform.rotation;
+                    return;
+                }
+            }
         }
 
         private void CalculateValue()
