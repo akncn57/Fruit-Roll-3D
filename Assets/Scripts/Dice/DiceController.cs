@@ -14,6 +14,9 @@ namespace Dice
         [Header("Dice Configuration")]
         [SerializeField] private List<DiceFace> diceFaces;
 
+        [Header("Effects")]
+        [SerializeField] private ParticleSystem[] stopParticles;
+
         public bool IsRolling => _isRolling;
         public int CurrentValue => _currentValue;
         public int? ForcedValue => _forcedValue;
@@ -50,6 +53,14 @@ namespace Dice
             }
 
             CalculateValue();
+
+            if (stopParticles != null)
+            {
+                foreach (var ps in stopParticles)
+                {
+                    if (ps != null) ps.Play();
+                }
+            }
             
             _isRolling = false;
         }
