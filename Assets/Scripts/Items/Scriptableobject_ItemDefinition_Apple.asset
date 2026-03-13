@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e4b586e7890bc4bbd5ed3182aa49cd, type: 3}
+  m_Name: Scriptableobject_ItemDefinition_Apple
+  m_EditorClassIdentifier: Assembly-CSharp::Items.ItemDefinition
+  itemType: 1
+  itemName: Apple
+  itemIcon: {fileID: 21300000, guid: 8f234c244f4550d4ba1e2d86ce4f5b2b, type: 3}
+  itemPrefab: {fileID: 8890508618791391049, guid: ca29c74284c40524f8edb533636550f9, type: 3}
+  itemInOutPrefab: {fileID: 0}

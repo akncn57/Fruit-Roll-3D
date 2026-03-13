@@ -8,6 +8,11 @@ namespace Inventory
     {
         public static InventoryManager Instance { get; private set; }
         
+        [Header("Item Definitions")]
+        [SerializeField] private ItemDefinition[] itemDefinitions;
+        
+        public event System.Action<ItemType, int> OnInventoryChanged;
+        
         public InventoryData GetInventory() => _currentData;
         
         private InventoryService _inventoryService;
@@ -38,6 +43,19 @@ namespace Inventory
             _currentData.Add(item);
             _inventoryService.SaveInventory(_currentData);
             EditorLogger.Log(nameof(InventoryManager), $"{item.Amount}x {item.Type} added to inventory.");
+            
+            OnInventoryChanged?.Invoke(item.Type, _currentData.GetAmount(item.Type));
+        }
+
+        public ItemDefinition GetItemDefinition(ItemType type)
+        {
+            if (itemDefinitions == null) return null;
+            
+            foreach (var def in itemDefinitions)
+            {
+                if (def != null && def.itemType == type) return def;
+            }
+            return null;
         }
     }
 }

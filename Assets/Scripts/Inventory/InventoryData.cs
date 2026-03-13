@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Items;
@@ -26,6 +26,12 @@ namespace Inventory
                     Amount = itemData.Amount
                 });
             }
+        }
+
+        public int GetAmount(ItemType itemType)
+        {
+            var existingItem = Items.FirstOrDefault(item => item.Type == itemType);
+            return existingItem != null ? existingItem.Amount : 0;
         }
     }
 }
