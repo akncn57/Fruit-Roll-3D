@@ -81,6 +81,7 @@ namespace Map
         }
         
         // Event triggered when the map finishes moving to the target step
+        public event Action OnMapMovementStarted;
         public event Action OnMapMovementCompleted;
         
         public void MoveMapToStep(int targetStepIndex, float unitsPerSecond = 20f)
@@ -90,7 +91,7 @@ namespace Map
             var targetPosition = new Vector3(startPosition.x, startPosition.y, targetZPosition);
             var distance = Vector3.Distance(startPosition, targetPosition);
             var moveDuration = distance / unitsPerSecond;
-            
+            OnMapMovementStarted?.Invoke();
             StartCoroutine(MoveContainerCoroutine(startPosition, targetPosition, moveDuration));
         }
 
