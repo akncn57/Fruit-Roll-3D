@@ -4,6 +4,7 @@ using Core;
 using Cameras;
 using Dice;
 using Map;
+using Inventory;
 using CameraType = Cameras.CameraType;
 
 namespace Core
@@ -156,6 +157,13 @@ namespace Core
             }
             
             MapManager.Instance.OnMapMovementCompleted -= onMapMovedAction;
+            
+            // Check for reward on the landed step and add to inventory
+            var stepData = MapManager.Instance.GetStepData(_currentStepIndex);
+            if (stepData != null && stepData.Reward != null && stepData.Reward.Amount > 0)
+            {
+                InventoryManager.Instance.AddItem(stepData.Reward);
+            }
             
             // Movement complete, back to top view observation
             ChangeState(GameState.TopView);

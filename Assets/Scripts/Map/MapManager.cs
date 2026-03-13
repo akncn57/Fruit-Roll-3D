@@ -19,6 +19,8 @@ namespace Map
         [Header("Container")]
         [SerializeField] private Transform mapContainer;
 
+        private MapData _currentMapData;
+
         private void Awake()
         {
             if (Instance == null)
@@ -39,9 +41,9 @@ namespace Map
 
         private void GenerateMap()
         {
-            var mapData = MapService.LoadMap(mapNameToLoad);
+            _currentMapData = MapService.LoadMap(mapNameToLoad);
 
-            if (mapData == null)
+            if (_currentMapData == null)
             {
                 Debug.LogError($"Failed to generate map. Map data for '{mapNameToLoad}' could not be loaded.");
                 return;
@@ -54,7 +56,7 @@ namespace Map
 
             var tileCount = 0;
             
-            foreach (var stepData in mapData.Steps)
+            foreach (var stepData in _currentMapData.Steps)
             {
                 var tile1Position = new Vector3(0, 0, tileCount * stepDistanceZ);
                 var tile1Instance = Instantiate(normalTilePrefab, tile1Position, Quaternion.identity, mapContainer);
@@ -74,9 +76,9 @@ namespace Map
                 tile2Instance.name = $"Tile2_Empty_{stepData.StepIndex}";
                 tileCount++;
             }
-            
-            Debug.Log($"Map '{mapData.MapName}' generated successfully with {mapData.TotalSteps} reward steps ({tileCount} total tiles).");
+            Debug.Log($"Map '{_currentMapData.MapName}' generated successfully with {_currentMapData.TotalSteps} reward steps ({tileCount} total tiles).");
         }
+        
         // Event triggered when the map finishes moving to the target step
         public event Action OnMapMovementCompleted;
         
@@ -109,6 +111,15 @@ namespace Map
             mapContainer.position = target;
             
             OnMapMovementCompleted?.Invoke();
+        }
+
+        public MapStepData GetStepData(int stepIndex)
+        {
+            if (_currentMapData != null && stepIndex < _currentMapData.Steps.Count)
+            {
+                return _currentMapData.Steps[stepIndex];
+            }
+            return null;
         }
     }
 }
