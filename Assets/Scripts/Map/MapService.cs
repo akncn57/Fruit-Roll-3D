@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.IO;
+using Utils;
 
 namespace Map
 {
@@ -21,7 +22,7 @@ namespace Map
             var filePath = Path.Combine(dir, $"{mapData.MapName}.json");
             var json = JsonUtility.ToJson(mapData, true);
             File.WriteAllText(filePath, json);
-            Debug.Log($"Map '{mapData.MapName}' saved to: {filePath}");
+            EditorLogger.Log(nameof(MapService), $"Map '{mapData.MapName}' saved to: {filePath}");
             
 #if UNITY_EDITOR
             UnityEditor.AssetDatabase.Refresh();
@@ -38,7 +39,7 @@ namespace Map
             }
             else
             {
-                Debug.LogError($"Map '{mapName}' not found in Resources/Maps.");
+                EditorLogger.Error(nameof(MapService), $"Map '{mapName}' not found in Resources/Maps.");
                 return null;
             }
         }

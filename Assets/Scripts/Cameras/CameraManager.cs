@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Utils;
 
 namespace Cameras
 {
@@ -46,7 +47,7 @@ namespace Cameras
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
 
-            Debug.Log($"[CameraManager] Switched to {type} camera.");
+            EditorLogger.Log(nameof(CameraManager), $"Switched to {type} camera.");
         }
     }
 }

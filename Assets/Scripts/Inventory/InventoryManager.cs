@@ -1,5 +1,6 @@
-﻿using Items;
+using Items;
 using UnityEngine;
+using Utils;
 
 namespace Inventory
 {
@@ -36,7 +37,7 @@ namespace Inventory
         {
             _currentData.Add(item);
             _inventoryService.SaveInventory(_currentData);
-            Debug.Log($"{item.Amount}x {item.Type} added to inventory.");
+            EditorLogger.Log(nameof(InventoryManager), $"{item.Amount}x {item.Type} added to inventory.");
         }
     }
 }

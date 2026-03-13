@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 namespace Dice
 {
@@ -73,12 +74,12 @@ namespace Dice
                 if (face.IsFaceUp())
                 {
                     _currentValue = face.faceValue;
-                    Debug.Log($"[DiceController] A dice landed on value: {_currentValue}");
+                    EditorLogger.Log(nameof(DiceController), $"A dice landed on value: {_currentValue}");
                     return;
                 }
             }
             
-            Debug.LogWarning("[DiceController] Dice stopped, but no clear face is pointing up!");
+            EditorLogger.Warning(nameof(DiceController), "Dice stopped, but no clear face is pointing up!");
             _currentValue = 0;
         }
     }

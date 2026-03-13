@@ -1,5 +1,7 @@
-﻿using System.IO;
+using System.IO;
+using System;
 using UnityEngine;
+using Utils;
 
 namespace Inventory
 {
@@ -13,11 +15,11 @@ namespace Inventory
             {
                 var json = JsonUtility.ToJson(data, true);
                 File.WriteAllText(_path, json);
-                Debug.Log($"Inventory saved to: {_path}");
+                EditorLogger.Log(nameof(InventoryService), $"Inventory saved to: {_path}");
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"Failed to save inventory: {e.Message}");
+                EditorLogger.Error(nameof(InventoryService), $"Failed to save inventory: {e.Message}");
             }
         }
 
@@ -25,7 +27,7 @@ namespace Inventory
         {
             if (!File.Exists(_path))
             {
-                Debug.Log("No save file found, creating new inventory.");
+                EditorLogger.Log(nameof(InventoryService), "No save file found, creating new inventory.");
                 var newData = new InventoryData();
                 SaveInventory(newData); 
                 return newData;
@@ -39,7 +41,7 @@ namespace Inventory
             }
             catch (System.Exception e)
             {
-                Debug.LogError($"Failed to load inventory: {e.Message}");
+                EditorLogger.Error(nameof(InventoryService), $"Failed to load inventory: {e.Message}");
                 return new InventoryData();
             }
         }

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using Core;
+using Utils;
 using Cameras;
 using Dice;
 using Map;
@@ -45,7 +46,7 @@ namespace Core
         {
             CurrentState = newState;
             
-            Debug.Log($"[GameManager] State changed to: {newState}");
+            EditorLogger.Log(nameof(GameManager), $"State changed to: {newState}");
 
             switch (newState)
             {
@@ -119,7 +120,7 @@ namespace Core
 
             _currentStepIndex += rolledSum;
             
-            Debug.Log($"[GameManager] Dice Physics Completed! Rolled: {rolledSum}. New Target Step: {_currentStepIndex}");
+            EditorLogger.Log(nameof(GameManager), $"Dice Physics Completed! Rolled: {rolledSum}. New Target Step: {_currentStepIndex}");
 
             // Let the player review the rolled output before snapping the camera back
             yield return new WaitForSeconds(waitAfterDiceStop);

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 using Random = UnityEngine.Random;
 
 namespace Dice
@@ -88,7 +89,7 @@ namespace Dice
                 {
                     if (dice.transform.position.y < fallThresholdY)
                     {
-                        Debug.LogWarning("[DiceManager] A dice fell off the board! Respawning it...");
+                        EditorLogger.Warning(nameof(DiceManager), "A dice fell off the board! Respawning it...");
                         
                         ResetDice(dice);
                     }
@@ -110,7 +111,7 @@ namespace Dice
                 finalTotal += dice.CurrentValue;
             }
 
-            Debug.Log($"[DiceManager] All {_activeDice.Count} dice stopped! TOTAL VALUE: {finalTotal}");
+            EditorLogger.Log(nameof(DiceManager), $"All {_activeDice.Count} dice stopped! TOTAL VALUE: {finalTotal}");
             
             OnAllDiceStopped?.Invoke(finalTotal);
         }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using Utils;
 
 namespace Map
 {
@@ -45,7 +46,7 @@ namespace Map
 
             if (_currentMapData == null)
             {
-                Debug.LogError($"Failed to generate map. Map data for '{mapNameToLoad}' could not be loaded.");
+                EditorLogger.Error(nameof(MapManager), $"Failed to generate map. Map data for '{mapNameToLoad}' could not be loaded.");
                 return;
             }
 
@@ -76,7 +77,7 @@ namespace Map
                 tile2Instance.name = $"Tile2_Empty_{stepData.StepIndex}";
                 tileCount++;
             }
-            Debug.Log($"Map '{_currentMapData.MapName}' generated successfully with {_currentMapData.TotalSteps} reward steps ({tileCount} total tiles).");
+            EditorLogger.Log(nameof(MapManager), $"Map '{_currentMapData.MapName}' generated successfully with {_currentMapData.TotalSteps} reward steps ({tileCount} total tiles).");
         }
         
         // Event triggered when the map finishes moving to the target step
