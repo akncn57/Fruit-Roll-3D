@@ -33,5 +33,10 @@ namespace Inventory
             var existingItem = Items.FirstOrDefault(item => item.Type == itemType);
             return existingItem != null ? existingItem.Amount : 0;
         }
+
+        public void Clear()
+        {
+            Items.Clear();
+        }
     }
 }

@@ -52,6 +52,8 @@ namespace Map.Editor
                     GUILayout.Label($"Step {i + 1}", EditorStyles.boldLabel);
                     
                     _currentMapData.Steps[i].StepIndex = i;
+                    
+                    _currentMapData.Steps[i].Type = (StepType)EditorGUILayout.EnumPopup("Step Type", _currentMapData.Steps[i].Type);
 
                     if (_currentMapData.Steps[i].Reward == null)
                         _currentMapData.Steps[i].Reward = new ItemData();

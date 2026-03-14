@@ -4,6 +4,7 @@
     "Steps": [
         {
             "StepIndex": 0,
+            "Type": 0,
             "Reward": {
                 "Type": 1,
                 "Amount": 1
@@ -11,6 +12,7 @@
         },
         {
             "StepIndex": 1,
+            "Type": 0,
             "Reward": {
                 "Type": 2,
                 "Amount": 1
@@ -18,6 +20,7 @@
         },
         {
             "StepIndex": 2,
+            "Type": 0,
             "Reward": {
                 "Type": 3,
                 "Amount": 1
@@ -25,6 +28,7 @@
         },
         {
             "StepIndex": 3,
+            "Type": 1,
             "Reward": {
                 "Type": 1,
                 "Amount": 1
@@ -32,6 +36,7 @@
         },
         {
             "StepIndex": 4,
+            "Type": 2,
             "Reward": {
                 "Type": 2,
                 "Amount": 1
@@ -39,6 +44,7 @@
         },
         {
             "StepIndex": 5,
+            "Type": 0,
             "Reward": {
                 "Type": 3,
                 "Amount": 1
@@ -46,6 +52,7 @@
         },
         {
             "StepIndex": 6,
+            "Type": 0,
             "Reward": {
                 "Type": 1,
                 "Amount": 1
@@ -53,6 +60,7 @@
         },
         {
             "StepIndex": 7,
+            "Type": 0,
             "Reward": {
                 "Type": 2,
                 "Amount": 1
@@ -60,6 +68,7 @@
         },
         {
             "StepIndex": 8,
+            "Type": 0,
             "Reward": {
                 "Type": 3,
                 "Amount": 1
@@ -67,6 +76,7 @@
         },
         {
             "StepIndex": 9,
+            "Type": 0,
             "Reward": {
                 "Type": 1,
                 "Amount": 1
@@ -74,6 +84,7 @@
         },
         {
             "StepIndex": 10,
+            "Type": 0,
             "Reward": {
                 "Type": 2,
                 "Amount": 1
@@ -81,6 +92,7 @@
         },
         {
             "StepIndex": 11,
+            "Type": 0,
             "Reward": {
                 "Type": 3,
                 "Amount": 1
@@ -88,6 +100,7 @@
         },
         {
             "StepIndex": 12,
+            "Type": 0,
             "Reward": {
                 "Type": 1,
                 "Amount": 1
@@ -95,6 +108,7 @@
         },
         {
             "StepIndex": 13,
+            "Type": 0,
             "Reward": {
                 "Type": 2,
                 "Amount": 1
@@ -102,6 +116,7 @@
         },
         {
             "StepIndex": 14,
+            "Type": 1,
             "Reward": {
                 "Type": 3,
                 "Amount": 1
@@ -109,6 +124,7 @@
         },
         {
             "StepIndex": 15,
+            "Type": 0,
             "Reward": {
                 "Type": 1,
                 "Amount": 1
@@ -116,6 +132,7 @@
         },
         {
             "StepIndex": 16,
+            "Type": 2,
             "Reward": {
                 "Type": 2,
                 "Amount": 1
@@ -123,6 +140,7 @@
         },
         {
             "StepIndex": 17,
+            "Type": 0,
             "Reward": {
                 "Type": 3,
                 "Amount": 1
@@ -130,6 +148,7 @@
         },
         {
             "StepIndex": 18,
+            "Type": 0,
             "Reward": {
                 "Type": 1,
                 "Amount": 1
@@ -137,6 +156,7 @@
         },
         {
             "StepIndex": 19,
+            "Type": 0,
             "Reward": {
                 "Type": 2,
                 "Amount": 1

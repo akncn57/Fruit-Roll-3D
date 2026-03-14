@@ -20,7 +20,7 @@ namespace Core
         [SerializeField] private float topViewDuration = 2f;
         [SerializeField] private float cameraSwitchDelayForDice = 1.5f;
         [SerializeField] private float waitAfterDiceStop = 1f;
-        [SerializeField] private float cameraSwitchDelayForStep = 0.5f;
+        [SerializeField] private float cameraSwitchDelayForStep = 2.0f;
         
         private int _currentStepIndex = 0;
 
@@ -159,11 +159,29 @@ namespace Core
             
             MapManager.Instance.OnMapMovementCompleted -= onMapMovedAction;
             
-            // Check for reward on the landed step and add to inventory
+            // Check the landed step's type
             var stepData = MapManager.Instance.GetStepData(_currentStepIndex);
-            if (stepData != null && stepData.Reward != null && stepData.Reward.Amount > 0)
+            if (stepData != null)
             {
-                InventoryManager.Instance.AddItem(stepData.Reward);
+                if (stepData.Type == StepType.ResetData)
+                {
+                    InventoryManager.Instance.ClearInventory();
+                }
+                else if (stepData.Type == StepType.ReturnToStart)
+                {
+                    EditorLogger.Log(nameof(GameManager), "Landed on ReturnToStart tile! Restarting...");
+                    _currentStepIndex = 0;
+                    ChangeState(GameState.MovingMap);
+                    yield break; // Stop this routine and let the new state transition take over
+                }
+                else // StepType.Normal
+                {
+                    // Check for reward on the landed step and add to inventory
+                    if (stepData.Reward != null && stepData.Reward.Amount > 0)
+                    {
+                        InventoryManager.Instance.AddItem(stepData.Reward);
+                    }
+                }
             }
             
             // Movement complete, back to top view observation

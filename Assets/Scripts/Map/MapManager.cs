@@ -15,6 +15,8 @@ namespace Map
 
         [Header("Prefabs")]
         [SerializeField] private GameObject normalTilePrefab;
+        [SerializeField] private GameObject resetDataTilePrefab;
+        [SerializeField] private GameObject returnToStartTilePrefab;
         [SerializeField] private GameObject emptyTilePrefab;
         
         [Header("Container")]
@@ -59,9 +61,20 @@ namespace Map
             
             foreach (var stepData in _currentMapData.Steps)
             {
+                GameObject prefabToUse = normalTilePrefab;
+
+                if (stepData.Type == StepType.ResetData)
+                {
+                    prefabToUse = resetDataTilePrefab != null ? resetDataTilePrefab : normalTilePrefab;
+                }
+                else if (stepData.Type == StepType.ReturnToStart)
+                {
+                    prefabToUse = returnToStartTilePrefab != null ? returnToStartTilePrefab : normalTilePrefab;
+                }
+
                 var tile1Position = new Vector3(0, 0, tileCount * stepDistanceZ);
-                var tile1Instance = Instantiate(normalTilePrefab, tile1Position, Quaternion.identity, mapContainer);
-                tile1Instance.name = $"Tile1_Step_{stepData.StepIndex}";
+                var tile1Instance = Instantiate(prefabToUse, tile1Position, Quaternion.identity, mapContainer);
+                tile1Instance.name = $"Tile1_{stepData.Type}_Step_{stepData.StepIndex}";
                 
                 // Fetch the MapTile controller and initialize the Visuals (Text, Objects inside box)
                 var mapTileScript = tile1Instance.GetComponent<MapTile>();

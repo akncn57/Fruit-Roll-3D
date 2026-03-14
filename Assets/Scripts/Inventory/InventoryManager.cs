@@ -47,6 +47,19 @@ namespace Inventory
             OnInventoryChanged?.Invoke(item.Type, _currentData.GetAmount(item.Type));
         }
 
+        public void ClearInventory()
+        {
+            // Trigger 0 amount UI updates for existing items
+            foreach (var item in _currentData.Items)
+            {
+                OnInventoryChanged?.Invoke(item.Type, 0);
+            }
+            
+            _currentData.Clear();
+            _inventoryService.SaveInventory(_currentData);
+            EditorLogger.Log(nameof(InventoryManager), "Inventory cleared due to landing on ResetData tile.");
+        }
+
         public ItemDefinition GetItemDefinition(ItemType type)
         {
             if (itemDefinitions == null) return null;
