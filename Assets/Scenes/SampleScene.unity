@@ -1839,7 +1839,7 @@ MonoBehaviour:
   stepDistanceZ: -4.986
   normalTilePrefab: {fileID: 1942092863588439427, guid: dc7db2156e6aa3c4488ac9f2761c4b0e, type: 3}
   resetDataTilePrefab: {fileID: 4455879534247450676, guid: f694a2565024b7e4aa9f6c8450c77f53, type: 3}
-  returnToStartTilePrefab: {fileID: 4455879534247450676, guid: 9effeab41009d764babd7524b1b3ff50, type: 3}
+  returnToStartTilePrefab: {fileID: 4455879534247450676, guid: 04078a7d35c80494ca1571658e12dc76, type: 3}
   emptyTilePrefab: {fileID: 4455879534247450676, guid: 9effeab41009d764babd7524b1b3ff50, type: 3}
   mapContainer: {fileID: 805484797}
 --- !u!1 &1165261904

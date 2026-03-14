@@ -5,7 +5,7 @@ using Items;
 
 namespace Map
 {
-    public class MapTile : MonoBehaviour
+    public class NormalTile : MonoBehaviour, IMapTile
     {
         [SerializeField] private TextMeshPro stepIndexText;
         [SerializeField] private Transform itemSpawnPoint;
@@ -22,19 +22,6 @@ namespace Map
             if (stepIndexText != null)
             {
                 stepIndexText.text = (stepData.StepIndex + 1).ToString();
-                
-                if (stepData.Type == StepType.ResetData)
-                {
-                    stepIndexText.color = Color.red;
-                }
-                else if (stepData.Type == StepType.ReturnToStart)
-                {
-                    stepIndexText.color = new Color(1f, 0.5f, 0f); // Orange
-                }
-                else
-                {
-                    stepIndexText.color = Color.white; // Default color
-                }
             }
 
             // Spawn the reward inside the box if it exists
