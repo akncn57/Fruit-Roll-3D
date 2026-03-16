@@ -51,18 +51,22 @@ namespace Core
             switch (newState)
             {
                 case GameState.TopView:
+                    UI.GameInfoUIController.Instance?.ShowMessage("Sıradaki tur için haritaya göz atılıyor...");
                     StartCoroutine(TopViewRoutine());
                     break;
                     
                 case GameState.WaitingForRoll:
+                    UI.GameInfoUIController.Instance?.ShowMessage("İlerlemek için zarları at!");
                     CameraManager.Instance.SwitchCamera(CameraType.Step);
                     break;
                     
                 case GameState.RollingDice:
+                    UI.GameInfoUIController.Instance?.ShowMessage("Zarlar atılıyor...");
                     StartCoroutine(RollingDiceRoutine());
                     break;
                     
                 case GameState.MovingMap:
+                    UI.GameInfoUIController.Instance?.ShowMessage("Hedefe ilerleniyor...");
                     StartCoroutine(MovingMapRoutine());
                     break;
             }
@@ -122,6 +126,8 @@ namespace Core
             
             EditorLogger.Log(nameof(GameManager), $"Dice Physics Completed! Rolled: {rolledSum}. New Target Step: {_currentStepIndex}");
 
+            UI.GameInfoUIController.Instance?.ShowMessage($"Zarları attın! Toplam {rolledSum} geldi, {rolledSum} adım ilerliyorsun!");
+
             // Let the player review the rolled output before snapping the camera back
             yield return new WaitForSeconds(waitAfterDiceStop);
             
@@ -165,15 +171,19 @@ namespace Core
             {
                 if (stepData.Type == StepType.ResetData)
                 {
+                    UI.GameInfoUIController.Instance?.ShowMessage("Eyvah! Tüm ödüllerin silindi ve başlangıca dönüyorsun.");
                     InventoryManager.Instance.ClearInventory();
                     EditorLogger.Log(nameof(GameManager), "Landed on ResetData tile! Clearing inventory and restarting...");
+                    yield return new WaitForSeconds(2.5f);
                     _currentStepIndex = 0;
                     ChangeState(GameState.MovingMap);
                     yield break;
                 }
                 else if (stepData.Type == StepType.ReturnToStart)
                 {
+                    UI.GameInfoUIController.Instance?.ShowMessage("Başlangıca geri dönüyorsun!");
                     EditorLogger.Log(nameof(GameManager), "Landed on ReturnToStart tile! Restarting...");
+                    yield return new WaitForSeconds(2.5f);
                     _currentStepIndex = 0;
                     ChangeState(GameState.MovingMap);
                     yield break; // Stop this routine and let the new state transition take over
@@ -183,6 +193,7 @@ namespace Core
                     // Check for reward on the landed step and add to inventory
                     if (stepData.Reward != null && stepData.Reward.Amount > 0)
                     {
+                        UI.GameInfoUIController.Instance?.ShowMessage($"Tebrikler! {stepData.Reward.Amount}x {stepData.Reward.Type} kazandın!");
                         // Add silently to prevent instant UI jump
                         InventoryManager.Instance.AddItem(stepData.Reward, silent: true);
                         
@@ -198,6 +209,13 @@ namespace Core
                         {
                             EditorLogger.Warning(nameof(GameManager), "RewardUIAnimator is missing. Visuals skipped.");
                         }
+                        
+                        yield return new WaitForSeconds(2f);
+                    }
+                    else
+                    {
+                        UI.GameInfoUIController.Instance?.ShowMessage("Boş bir kareye geldin.");
+                        yield return new WaitForSeconds(1.5f);
                     }
                 }
             }

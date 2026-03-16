@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29e4b586e7890bc4bbd5ed3182aa49cd, type: 3}
-  m_Name: Scriptableobject_ItemDefinition_Strawberry
+  m_Name: Scriptableobject_ItemDefinition_Banana
   m_EditorClassIdentifier: Assembly-CSharp::Items.ItemDefinition
   itemType: 3
-  itemName: Strawberry
-  itemIcon: {fileID: 21300000, guid: 8f234c244f4550d4ba1e2d86ce4f5b2b, type: 3}
+  itemName: Banaan
+  itemIcon: {fileID: 21300000, guid: f37cee51c4b533e40bf76d1cd677e1a0, type: 3}
   itemPrefab: {fileID: 4546106523699900722, guid: 17470619b10b5ae4fac1cb1d8549dcd1, type: 3}
   itemInOutPrefab: {fileID: 0}

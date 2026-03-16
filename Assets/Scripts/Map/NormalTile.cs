@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Items;
+using UnityEngine.Serialization;
 
 namespace Map
 {
@@ -14,7 +15,7 @@ namespace Map
         [Header("Item Models")]
         [SerializeField] private GameObject applePrefab;
         [SerializeField] private GameObject pearPrefab;
-        [SerializeField] private GameObject strawberryPrefab;
+        [SerializeField] private GameObject bananaPrefab;
 
         public void Initialize(MapStepData stepData)
         {
@@ -54,8 +55,8 @@ namespace Map
                 case ItemType.Pear:
                     prefabToSpawn = pearPrefab;
                     break;
-                case ItemType.Strawberry:
-                    prefabToSpawn = strawberryPrefab;
+                case ItemType.Banana:
+                    prefabToSpawn = bananaPrefab;
                     break;
                 case ItemType.None:
                     break;

@@ -5,6 +5,6 @@
         None,
         Apple,
         Pear,
-        Strawberry
+        Banana
     }
 }

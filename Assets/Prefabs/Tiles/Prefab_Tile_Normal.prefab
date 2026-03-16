@@ -56,7 +56,7 @@ MonoBehaviour:
   rewardAmountText: {fileID: 520018039885019119}
   applePrefab: {fileID: 8890508618791391049, guid: ca29c74284c40524f8edb533636550f9, type: 3}
   pearPrefab: {fileID: 1174299434121207544, guid: 63362580f78432e49b8ef2f92323ec19, type: 3}
-  strawberryPrefab: {fileID: 4546106523699900722, guid: 17470619b10b5ae4fac1cb1d8549dcd1, type: 3}
+  bananaPrefab: {fileID: 4546106523699900722, guid: 17470619b10b5ae4fac1cb1d8549dcd1, type: 3}
 --- !u!1 &2548423538977166591
 GameObject:
   m_ObjectHideFlags: 0
