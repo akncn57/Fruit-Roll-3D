@@ -15,7 +15,7 @@ namespace UI
         [SerializeField] private float flyDuration = 0.8f;
         [SerializeField] private float arcHeight = 150f;
 
-        public void Init(Sprite iconSprite, Vector3 startPos, ItemUIController targetController)
+        public void Init(Sprite iconSprite, Vector3 startPos, ItemUIController targetController, int amountToAdd = 0)
         {
             if (iconImage != null)
             {
@@ -23,10 +23,10 @@ namespace UI
             }
             
             // Start animation
-            StartCoroutine(FlyRoutine(startPos, targetController));
+            StartCoroutine(FlyRoutine(startPos, targetController, amountToAdd));
         }
 
-        private IEnumerator FlyRoutine(Vector3 startPos, ItemUIController targetController)
+        private IEnumerator FlyRoutine(Vector3 startPos, ItemUIController targetController, int amountToAdd)
         {
             var tr = transform;
             tr.position = startPos;
@@ -65,6 +65,11 @@ namespace UI
                 tr.localScale = Vector3.one * scale;
 
                 yield return null;
+            }
+            
+            if (targetController != null && amountToAdd > 0)
+            {
+                targetController.AddVisualAmount(amountToAdd);
             }
             
             // Clean up prefab instance

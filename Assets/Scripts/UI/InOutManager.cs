@@ -80,10 +80,14 @@ namespace UI
                 yield break;
             }
 
+            int baseAmountPerIcon = totalAmount / numIcons;
+            int remainder = totalAmount % numIcons;
+
             for (var i = 0; i < numIcons; i++)
             {
+                int amountForThisIcon = baseAmountPerIcon + (i < remainder ? 1 : 0);
                 var iconInstance = Instantiate(rewardPrefab, inOutsParent, false);
-                iconInstance.Init(definition.itemIcon, startPos, controller);
+                iconInstance.Init(definition.itemIcon, startPos, controller, amountForThisIcon);
                 
                 yield return new WaitForSeconds(spawnDelay);
             }
