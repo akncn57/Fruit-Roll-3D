@@ -186,9 +186,9 @@ namespace Core
                         Vector3 tilePos = Vector3.zero; 
                         
                         // Fire the visual reward animator
-                        if (UI.RewardUIAnimator.Instance != null)
+                        if (UI.InOutManager.Instance != null)
                         {
-                            UI.RewardUIAnimator.Instance.AnimateReward(stepData.Reward.Type, stepData.Reward.Amount, tilePos);
+                            UI.InOutManager.Instance.AnimateReward(stepData.Reward.Type, stepData.Reward.Amount, tilePos);
                         }
                         else
                         {
