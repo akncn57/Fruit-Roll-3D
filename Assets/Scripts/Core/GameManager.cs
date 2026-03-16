@@ -166,6 +166,10 @@ namespace Core
                 if (stepData.Type == StepType.ResetData)
                 {
                     InventoryManager.Instance.ClearInventory();
+                    EditorLogger.Log(nameof(GameManager), "Landed on ResetData tile! Clearing inventory and restarting...");
+                    _currentStepIndex = 0;
+                    ChangeState(GameState.MovingMap);
+                    yield break;
                 }
                 else if (stepData.Type == StepType.ReturnToStart)
                 {
