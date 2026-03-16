@@ -331,6 +331,7 @@ GameObject:
   - component: {fileID: 274589363}
   - component: {fileID: 274589362}
   - component: {fileID: 274589366}
+  - component: {fileID: 274589367}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -441,6 +442,21 @@ MonoBehaviour:
   firstDiceInput: {fileID: 1668922118}
   secondDiceInput: {fileID: 960719454}
   rollDiceButton: {fileID: 2010551967}
+--- !u!114 &274589367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274589361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69f8b4c499ea2b941ab2b1db6774fc5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.RewardUIAnimator
+  rewardPrefab: {fileID: 2651359802082107061, guid: 19fa9d2d68fa31e40a21ab3bde73677d, type: 3}
+  spawnDelay: 0.08
+  maxIcons: 10
 --- !u!1 &322166200
 GameObject:
   m_ObjectHideFlags: 0

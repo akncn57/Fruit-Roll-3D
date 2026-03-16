@@ -179,7 +179,21 @@ namespace Core
                     // Check for reward on the landed step and add to inventory
                     if (stepData.Reward != null && stepData.Reward.Amount > 0)
                     {
-                        InventoryManager.Instance.AddItem(stepData.Reward);
+                        // Add silently to prevent instant UI jump
+                        InventoryManager.Instance.AddItem(stepData.Reward, silent: true);
+                        
+                        // The map moves so the landed step is near the origin (where the character is)
+                        Vector3 tilePos = Vector3.zero; 
+                        
+                        // Fire the visual reward animator
+                        if (UI.RewardUIAnimator.Instance != null)
+                        {
+                            UI.RewardUIAnimator.Instance.AnimateReward(stepData.Reward.Type, stepData.Reward.Amount, tilePos);
+                        }
+                        else
+                        {
+                            EditorLogger.Warning(nameof(GameManager), "RewardUIAnimator is missing. Visuals skipped.");
+                        }
                     }
                 }
             }

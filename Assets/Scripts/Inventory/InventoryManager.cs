@@ -38,13 +38,16 @@ namespace Inventory
             _currentData = _inventoryService.LoadInventory();
         }
         
-        public void AddItem(ItemData item)
+        public void AddItem(ItemData item, bool silent = false)
         {
             _currentData.Add(item);
             _inventoryService.SaveInventory(_currentData);
             EditorLogger.Log(nameof(InventoryManager), $"{item.Amount}x {item.Type} added to inventory.");
             
-            OnInventoryChanged?.Invoke(item.Type, _currentData.GetAmount(item.Type));
+            if (!silent)
+            {
+                OnInventoryChanged?.Invoke(item.Type, _currentData.GetAmount(item.Type));
+            }
         }
 
         public void ClearInventory()

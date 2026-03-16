@@ -9,6 +9,8 @@ namespace UI
 {
     public class ItemUIController : MonoBehaviour
     {
+        public static readonly System.Collections.Generic.Dictionary<ItemType, ItemUIController> ActiveControllers = new System.Collections.Generic.Dictionary<ItemType, ItemUIController>();
+
         [Header("Configuration")]
         [SerializeField] private ItemType itemTypeToDisplay;
 
@@ -16,14 +18,17 @@ namespace UI
         [SerializeField] private Image itemIconImage;
         [SerializeField] private TextMeshProUGUI itemAmountText;
 
+        private int _currentDisplayAmount;
+
         private void Start()
         {
             SetupVisuals();
+            ActiveControllers[itemTypeToDisplay] = this;
 
             if (InventoryManager.Instance != null)
             {
                 InventoryManager.Instance.OnInventoryChanged += HandleInventoryChanged;
-                UpdateAmountDisplay(InventoryManager.Instance.GetInventory().GetAmount(itemTypeToDisplay));
+                SetVisualAmount(InventoryManager.Instance.GetInventory().GetAmount(itemTypeToDisplay));
             }
             else
             {
@@ -33,6 +38,11 @@ namespace UI
 
         private void OnDestroy()
         {
+            if (ActiveControllers.TryGetValue(itemTypeToDisplay, out var controller) && controller == this)
+            {
+                ActiveControllers.Remove(itemTypeToDisplay);
+            }
+
             if (InventoryManager.Instance != null)
             {
                 InventoryManager.Instance.OnInventoryChanged -= HandleInventoryChanged;
@@ -61,15 +71,36 @@ namespace UI
         {
             if (type == itemTypeToDisplay)
             {
-                UpdateAmountDisplay(newAmount);
+                SetVisualAmount(newAmount);
             }
         }
 
-        private void UpdateAmountDisplay(int amount)
+        private void SetVisualAmount(int amount)
+        {
+            _currentDisplayAmount = amount;
+            UpdateAmountDisplay();
+        }
+
+        public void AddVisualAmount(int amountToAdd)
+        {
+            _currentDisplayAmount += amountToAdd;
+            UpdateAmountDisplay();
+        }
+
+        public Vector3 GetIconPosition()
+        {
+            if (itemIconImage != null)
+            {
+                return itemIconImage.transform.position;
+            }
+            return transform.position;
+        }
+
+        private void UpdateAmountDisplay()
         {
             if (itemAmountText != null)
             {
-                itemAmountText.text = amount.ToString();
+                itemAmountText.text = _currentDisplayAmount.ToString();
             }
         }
     }
